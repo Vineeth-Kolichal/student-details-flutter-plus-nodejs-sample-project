@@ -21,23 +21,42 @@ export const addStudent=async (req,res)=>{
             age
         });
         const saveStudent= await studentModel.save();
-        res.status(201).json({message:"Successfully added"});
+        res.status(201).json({message:"Successfully added",data:saveStudent});
         
     } catch (error) {
         res.status(400).json({message:"error while adding student",error:error.message});
         
     }
-    console.log(req.body);
 
 }
 
 export const updateStudent=async (req,res)=>{
-   
-res.status(200).json({message:"Successfully updated"});
+    try {
+       const student=await StudentModel.findById(req.params.id);
+       student.name=req.body.name;
+       student.age=req.body.age;
+       await student.save();
+        res.status(200).json({message:"Successfully updated"});
+    } catch (error) {
+        res.status(400).json({message:"not updated",error:error.message});
+        
+    }
 }
 
 export const deleteStudent=async (req,res)=>{
+    try {
+        const id= req.params.id;
+        const student=await StudentModel.findById(id);
+        if(!student){
+            res.status(404).json({message:"student not found"});
+        }else{
+           await StudentModel.deleteOne({_id:id});
+           res.status(200).json({message:"successfully deleted"});
+        }
+        
+    } catch (error) {
+        res.status(500).json({message:"error while deleting student",error:error})
+    }
    
-res.status(201).json({message:"Successfully deleted"});
 }
 
