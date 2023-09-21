@@ -4,10 +4,10 @@ export  const getstudents=async(req,res)=>{
    try {
 
     const students=await StudentModel.find();
-    res.status(200).json({students:students});
+    res.status(200).json({status:200,students:students});
     
    } catch (error) {
-    res.status(500).json({message: "Error while retrieving data",error:error.message});
+    res.status(500).json({status:500,message: "Error while retrieving data",error:error.message});
     
    }
 }
