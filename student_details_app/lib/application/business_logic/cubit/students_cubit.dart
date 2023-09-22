@@ -1,3 +1,4 @@
+import 'dart:ffi';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -12,7 +13,8 @@ class StudentsCubit extends Cubit<StudentsState> {
   StudentsRepository studentsRepository = StudentsRepository();
   StudentsCubit() : super(StudentsState.initial());
   Future<void> getAllStudent() async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(
+        isLoading: true, allStudentsModel: null, deleteMsg: null));
     await studentsRepository.getAllStudentsFromAPI().then((value) {
       final newState = value.fold((faliure) {
         return state.copyWith(isLoading: false);
@@ -22,5 +24,12 @@ class StudentsCubit extends Cubit<StudentsState> {
       });
       emit(newState);
     });
+  }
+
+  Future<void> deleteStudent(String id) async {
+    await studentsRepository.deleteStudent(id).then((value) {
+      emit(state.copyWith(deleteMsg: value));
+    });
+    await getAllStudent();
   }
 }

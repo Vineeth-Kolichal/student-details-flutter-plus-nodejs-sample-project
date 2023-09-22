@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$StudentsState {
   AllStudentsModel? get allStudentsModel => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String? get deleteMsg => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StudentsStateCopyWith<StudentsState> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $StudentsStateCopyWith<$Res> {
           StudentsState value, $Res Function(StudentsState) then) =
       _$StudentsStateCopyWithImpl<$Res, StudentsState>;
   @useResult
-  $Res call({AllStudentsModel? allStudentsModel, bool isLoading});
+  $Res call(
+      {AllStudentsModel? allStudentsModel, bool isLoading, String? deleteMsg});
 }
 
 /// @nodoc
@@ -48,6 +50,7 @@ class _$StudentsStateCopyWithImpl<$Res, $Val extends StudentsState>
   $Res call({
     Object? allStudentsModel = freezed,
     Object? isLoading = null,
+    Object? deleteMsg = freezed,
   }) {
     return _then(_value.copyWith(
       allStudentsModel: freezed == allStudentsModel
@@ -58,6 +61,10 @@ class _$StudentsStateCopyWithImpl<$Res, $Val extends StudentsState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      deleteMsg: freezed == deleteMsg
+          ? _value.deleteMsg
+          : deleteMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -70,7 +77,8 @@ abstract class _$$_InitialCopyWith<$Res>
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AllStudentsModel? allStudentsModel, bool isLoading});
+  $Res call(
+      {AllStudentsModel? allStudentsModel, bool isLoading, String? deleteMsg});
 }
 
 /// @nodoc
@@ -85,6 +93,7 @@ class __$$_InitialCopyWithImpl<$Res>
   $Res call({
     Object? allStudentsModel = freezed,
     Object? isLoading = null,
+    Object? deleteMsg = freezed,
   }) {
     return _then(_$_Initial(
       allStudentsModel: freezed == allStudentsModel
@@ -95,6 +104,10 @@ class __$$_InitialCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      deleteMsg: freezed == deleteMsg
+          ? _value.deleteMsg
+          : deleteMsg // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -102,16 +115,21 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial({required this.allStudentsModel, required this.isLoading});
+  const _$_Initial(
+      {required this.allStudentsModel,
+      required this.isLoading,
+      this.deleteMsg});
 
   @override
   final AllStudentsModel? allStudentsModel;
   @override
   final bool isLoading;
+  @override
+  final String? deleteMsg;
 
   @override
   String toString() {
-    return 'StudentsState(allStudentsModel: $allStudentsModel, isLoading: $isLoading)';
+    return 'StudentsState(allStudentsModel: $allStudentsModel, isLoading: $isLoading, deleteMsg: $deleteMsg)';
   }
 
   @override
@@ -122,11 +140,14 @@ class _$_Initial implements _Initial {
             (identical(other.allStudentsModel, allStudentsModel) ||
                 other.allStudentsModel == allStudentsModel) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.deleteMsg, deleteMsg) ||
+                other.deleteMsg == deleteMsg));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, allStudentsModel, isLoading);
+  int get hashCode =>
+      Object.hash(runtimeType, allStudentsModel, isLoading, deleteMsg);
 
   @JsonKey(ignore: true)
   @override
@@ -138,12 +159,15 @@ class _$_Initial implements _Initial {
 abstract class _Initial implements StudentsState {
   const factory _Initial(
       {required final AllStudentsModel? allStudentsModel,
-      required final bool isLoading}) = _$_Initial;
+      required final bool isLoading,
+      final String? deleteMsg}) = _$_Initial;
 
   @override
   AllStudentsModel? get allStudentsModel;
   @override
   bool get isLoading;
+  @override
+  String? get deleteMsg;
   @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>

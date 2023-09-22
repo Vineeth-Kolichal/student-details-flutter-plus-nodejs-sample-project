@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_details_app/application/business_logic/cubit/students_cubit.dart';
+import 'package:student_details_app/domain/models/all_students_model/student.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,14 @@ class HomeScreen extends StatelessWidget {
       ),
       body: BlocConsumer<StudentsCubit, StudentsState>(
         listener: (context, state) {
+          if (state.deleteMsg != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                '${state.deleteMsg}',
+              ),
+              backgroundColor: Colors.grey,
+            ));
+          }
           if (state.allStudentsModel != null &&
               state.allStudentsModel?.status == 500) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -47,11 +56,8 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: ListView.separated(
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                          '${state.allStudentsModel!.students[index].name}'),
-                      subtitle: Text(
-                          '${state.allStudentsModel!.students[index].age}'),
+                    return ListTileWidget(
+                      student: state.allStudentsModel!.students[index],
                     );
                   },
                   separatorBuilder: (context, index) => const Divider(),
@@ -65,3 +71,35 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+class ListTileWidget extends StatefulWidget {
+  const ListTileWidget({
+    super.key,
+    required this.student,
+  });
+  final Student student;
+
+  @override
+  State<ListTileWidget> createState() => _ListTileWidgetState();
+}
+
+class _ListTileWidgetState extends State<ListTileWidget> {
+  bool deleteLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text('${widget.student.name}'),
+      subtitle: Text('${widget.student.age}'),
+      trailing: IconButton(
+              onPressed: () {
+                setState(() {
+                  deleteLoading = true;
+                });
+                context.read<StudentsCubit>().deleteStudent(widget.student.id!);
+              },
+              icon: Icon(Icons.delete)),
+    );
+  }
+}
+
+

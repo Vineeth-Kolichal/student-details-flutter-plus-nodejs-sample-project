@@ -13,7 +13,7 @@ AllStudentsModel _$AllStudentsModelFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       message: json['message'] as String?,
-      status: json['status'] as int,
+      status: json['status'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$AllStudentsModelToJson(AllStudentsModel instance) =>

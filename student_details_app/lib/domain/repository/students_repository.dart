@@ -20,4 +20,17 @@ class StudentsRepository {
       return const Left(Failures.clientError());
     }
   }
+
+  Future<String> deleteStudent(String id) async {
+    final response = await studentDataProvider.deleteStudent(id);
+    if (response != null &&
+        (response.statusCode == 200 ||
+            response.statusCode == 404 ||
+            response.statusCode == 500)) {
+      final model = AllStudentsModel.fromJson(response.data);
+      return model.message!;
+    } else {
+      return 'something error';
+    }
+  }
 }

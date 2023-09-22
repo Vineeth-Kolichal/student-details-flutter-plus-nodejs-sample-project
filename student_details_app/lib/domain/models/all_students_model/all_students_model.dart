@@ -10,7 +10,7 @@ class AllStudentsModel {
   List<Student> students;
   String? message;
 
-  AllStudentsModel({this.students = const [],this.message,required this.status});
+  AllStudentsModel({this.students = const [], this.message, this.status = 0});
 
   factory AllStudentsModel.fromJson(Map<String, dynamic> json) {
     return _$AllStudentsModelFromJson(json);
